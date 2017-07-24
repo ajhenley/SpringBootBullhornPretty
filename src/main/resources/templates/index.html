@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.net" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+</head>
+<body>
+    <th:block th:if="${bullhornposts}">
+    <div th:each="post : ${bullhornposts}">
+        <h2 th:text="${post.bullhornuser.username}"></h2>
+        <h4 th:text="${post.bullhornuser.useremail}"></h4>
+        <h4 th:text="${post.postdate}"></h4>
+        <p th:text="${post.posttext}"></p>
+    </div>
+    </th:block>
+    <a href="/addpost">Post</a>
+</body>
+</html>
