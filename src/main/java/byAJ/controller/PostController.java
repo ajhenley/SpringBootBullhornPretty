@@ -26,7 +26,7 @@ public class PostController {
 
     @GetMapping("/addpost")
     public String loadPostForm(Model model){
-        model.addAttribute("bullhornpost", new BullhornPost());
+        model.addAttribute("post", new BullhornPost());
         return "addpost";
     }
 

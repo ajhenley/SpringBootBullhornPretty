@@ -14,6 +14,8 @@ public class BullhornPost {
 
     private String postText;
 
+    private String image;
+
     @ManyToOne
     private BullhornUser bullhornuser;
 
@@ -23,6 +25,13 @@ public class BullhornPost {
     public BullhornPost(Date postDate, String postText, BullhornUser bullhornuser) {
         this.postDate = postDate;
         this.postText = postText;
+        this.bullhornuser = bullhornuser;
+    }
+
+    public BullhornPost(Date postDate, String postText, String image, BullhornUser bullhornuser) {
+        this.postDate = postDate;
+        this.postText = postText;
+        this.image = image;
         this.bullhornuser = bullhornuser;
     }
 
@@ -56,5 +65,13 @@ public class BullhornPost {
 
     public void setBullhornuser(BullhornUser bullhornuser) {
         this.bullhornuser = bullhornuser;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

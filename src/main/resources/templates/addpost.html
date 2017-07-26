@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="www.thymeleaf.net" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Bullhorn</title>
 </head>
 <body>
     <form action="#" th:action="@{/addpost}" th:object="${post}" method="post">
         <label>Create New Post (141 char):</label>
-        <textarea th:field="${post.postText}" class="form-control" rows="2" placeholder= "Express yourself!" maxlength="141"></textarea>
+        <textarea th:field="*{postText}" class="form-control" rows="2" placeholder= "Express yourself!" maxlength="141"></textarea><br />
+        Image (if you have one)<br />
         <input type="submit" value="Submit" id="submit"/>
         <input type="reset" value="Clear"/>
     </form>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <td colspan="2" th:text="${user.headshot}"></td>
+        </tr>
+        <tr>
+            <th>Username</th>
+            <td th:text="${user.username}"></td>
+        </tr>
+        <tr>
+            <th>Joined</th>
+            <td th:text="${user.joindate}"></td>
+        </tr>
+        <tr>
+            <th>Motto</th>
+            <td th:text="${user.motto}"></td>
+        </tr>
+    </table>
+    <a th:href="@{/follow/{id}(id=${user.id})}" href="/follow">Follow this User</a>
+    <br />
+    <th:block th:if="${user.bullhornposts}">
+        <div th:each="post : ${user.bullhornposts}">
+            <h2 th:text="${post.bullhornuser.username}"></h2>
+            <h4 th:text="${post.bullhornuser.useremail}"></h4>
+            <h4 th:text="${post.postDate}"></h4>
+            <p th:text="${post.postText}"></p>
+        </div>
+    </th:block>
+</body>
+</html>

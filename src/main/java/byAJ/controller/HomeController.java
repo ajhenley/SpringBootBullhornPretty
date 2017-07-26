@@ -1,6 +1,11 @@
 package byAJ.controller;
 
+import byAJ.models.BullhornFollow;
+import byAJ.models.BullhornPost;
 import byAJ.models.BullhornUser;
+import byAJ.repositories.BullhornFollowRepository;
+import byAJ.repositories.BullhornPostRepository;
+import byAJ.repositories.BullhornUserRepository;
 import byAJ.service.UserService;
 import byAJ.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 public class HomeController {
@@ -20,8 +26,18 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    BullhornPostRepository postRepository;
+
+    @Autowired
+    BullhornUserRepository userRepository;
+
+    @Autowired
+    BullhornFollowRepository followRepository;
+
     @RequestMapping("/")
-    public String index(){
+    public String index(Model model){
+        model.addAttribute("posts", postRepository.findAll());
         return "index";
     }
 
@@ -51,6 +67,25 @@ public class HomeController {
         return "index";
     }
 
+    @RequestMapping("/showprofile/{id}")
+    public String showProfile(@PathVariable("id") Long id, Model model){
+        model.addAttribute("user", userRepository.findOne(id));
+        return "profile";
+    }
+
+    @RequestMapping("/follow/{id}")
+    public String followUser(@PathVariable("id") Long id, Model model, Principal principal){
+        Long userid = userRepository.findByUsername(principal.getName()).getId();
+        followRepository.save(new BullhornFollow(userid, id));
+        return "redirect:/myprofile";
+    }
+
+    @RequestMapping("/myprofile")
+    public String showMyProfile(Principal principal, Model model){
+        model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        return "profile";
+    }
+
     public UserValidator getUserValidator() {
         return userValidator;
     }
@@ -58,4 +93,6 @@ public class HomeController {
     public void setUserValidator(UserValidator userValidator) {
         this.userValidator = userValidator;
     }
+
+
 }

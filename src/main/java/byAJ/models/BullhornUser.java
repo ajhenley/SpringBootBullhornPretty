@@ -23,6 +23,10 @@ public class BullhornUser {
 
     private String userpassword;
 
+    private String headshot;
+
+    private String background;
+
     @OneToMany(mappedBy = "bullhornuser")
     private List<BullhornPost> bullhornposts;
 
@@ -39,6 +43,16 @@ public class BullhornUser {
         this.useremail = useremail;
         this.username = username;
         this.userpassword = userpassword;
+    }
+
+    public BullhornUser(Date joindate, String motto, String useremail, String username, String userpassword, String headshot, String background) {
+        this.joindate = joindate;
+        this.motto = motto;
+        this.useremail = useremail;
+        this.username = username;
+        this.userpassword = userpassword;
+        this.headshot = headshot;
+        this.background = background;
     }
 
 
@@ -104,5 +118,21 @@ public class BullhornUser {
 
     public void setRoles(Collection<BullhornRole> roles) {
         this.roles = roles;
+    }
+
+    public String getHeadshot() {
+        return headshot;
+    }
+
+    public void setHeadshot(String headshot) {
+        this.headshot = headshot;
+    }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
     }
 }
