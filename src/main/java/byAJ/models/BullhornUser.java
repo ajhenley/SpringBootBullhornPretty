@@ -15,6 +15,8 @@ public class BullhornUser {
     @Temporal(TemporalType.DATE)
     private Date joindate;
 
+    private String location;
+
     private String motto;
 
     private String useremail;
@@ -24,6 +26,10 @@ public class BullhornUser {
     private String userpassword;
 
     private String headshot;
+
+    private String profilepic;
+
+    private String website;
 
     private String background;
 
@@ -134,5 +140,29 @@ public class BullhornUser {
 
     public void setBackground(String background) {
         this.background = background;
+    }
+
+    public String getProfilepic() {
+        return profilepic;
+    }
+
+    public void setProfilepic(String profilepic) {
+        this.profilepic = profilepic;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

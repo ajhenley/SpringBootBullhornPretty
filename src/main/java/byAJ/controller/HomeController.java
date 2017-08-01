@@ -36,9 +36,15 @@ public class HomeController {
     BullhornFollowRepository followRepository;
 
     @RequestMapping("/")
-    public String index(Model model){
-        model.addAttribute("posts", postRepository.findAll());
-        return "i_index";
+    public String index(Model model, Principal principal){
+        model.addAttribute("posts", postRepository.findAllOrdered());
+        if (principal == null){
+            return "i_index";
+        } else {
+            model.addAttribute("user",userRepository.findByUsername(principal.getName()));
+            model.addAttribute("post", new BullhornPost());
+            return "s_index";
+        }
     }
 
     @RequestMapping("/login")

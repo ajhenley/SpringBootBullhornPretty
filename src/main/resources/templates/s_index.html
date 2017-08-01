@@ -55,78 +55,54 @@
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <form class="navbar-form" role="search">
-                        <!--
+
                                         <div class="form-group">
-                                          <input type="text" class="form-control border-input" placeholder="Search">
+                                          <input type="text" class="form-control border-input" placeholder="Search" />
                                         </div>
-                        -->
+
                         <button type="submit" class="btn btn-icon"><i class="fa fa-search"></i></button>
                     </form>
                 </li>
-                <li class="dropdown">
-                    <a href="#" class="profile-photo dropdown-toggle" data-toggle="dropdown">
-                        <div class="profile-photo-small">
-                            <img src="/assets/img/cristina.jpg" alt="Circle Image" class="img-circle img-responsive img-no-padding" />
-                        </div>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-right dropdown-wide">
-                        <li class="dropdown-header">
-                            Dropdown header
-                        </li>
-                        <li>
-                            <a href="#">Me</a>
-                        </li>
-                        <li>
-                            <a href="#">Settings and other stuff</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="#">Sign out</a></li>
-                        <li class="dropdown-footer">
-                            <ul class="dropdown-footer-menu">
-                                <li>
-                                    <a href="#">Creative Tim</a>
-                                </li>
-                                <li>
-                                    <a href="#">Terms</a>
-                                </li>
-                                <li>
-                                    <a href="#">Privacy</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
                 <li>
-                    <a href="/login" class="btn btn-info btn-fill btn-icon" ><i class="fa fa-lock"></i> Login</a>
+                    <a href="#" class="btn btn-info btn-fill btn-icon" data-toggle="modal" data-target="#tweetModal"><i class="fa fa-pencil"></i> Post</a>
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-->
 </nav>
-<div th:if="${param.error}">
-    <div class="alert-wrapper">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">×</span>
-        </button>
-        <i class="alert-icon ti-bell"></i>
-        <div class="message">Invalid Username and Password</div>
-    </div>
-</div>
-<div th:if="${param.logout}">
-    <div class="alert-wrapper">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">×</span>
-        </button>
-        <i class="alert-icon ti-bell"></i>
-        <div class="message">You have been logged out</div>
-    </div>
-</div>
+
 <div class="wrapper">
     <div class="profile-background"  style="background-image: url('/assets/img/rihanna_cover.jpg');">
         <div class="filter-black"></div>
     </div>
     <div class="profile-content section-white-gray">
         <div class="container">
+            <div class="row owner">
+                <div class="col-md-2 col-md-offset-5 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3 text-center">
+                    <div class="avatar">
+                        <img src="/assets/img/rihanna.jpg" th:src="${user.profilepic}" alt="Circle Image" class="img-circle img-responsive" />
+                        <div class="following">
+                            <btn class="btn btn-sm btn-fill btn-info btn-icon" rel="tooltip" title="Follow"><i class="fa fa-plus"></i></btn>
+                        </div>
+                    </div>
+
+                    <div class="name">
+                        <h4 th:inline="text">[[${user.username}]] <br /><small>@[[${user.username}]]</small></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 text-center">
+                    <p th:text="${user.motto}"></p>
+                    <div class="description-details">
+                        <ul class="list-unstyled">
+                            <li th:inline="text"><i class="fa fa-map-marker"></i> [[${user.location}]]</li>
+                            <li><i class="fa fa-link"></i> <a href="#" th:href="'http://'+${user.website}" th:text="${user.website}"></a></li>
+                            <li th:inline="text"><i class="fa fa-calendar"></i> Joined [[${#dates.format(user.joindate, "MMM yyyy")}]]</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
             <div class="profile-tabs">
                 <div id="my-tab-content" class="tab-content">
                     <div class="tab-pane active" id="tweets">
@@ -241,6 +217,33 @@
         </div>
     </div>
 </footer>
+
+
+<!-- tweet modal -->
+<div class="modal fade" id="tweetModal" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-medium modal-register">
+        <div class="modal-content">
+            <div class="modal-header no-border-header text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title">Post A Message</h3>
+            </div>
+            <div class="modal-body">
+                <form action="#" th:action="@{/addpost}" th:object="${post}" method="post">
+                    <textarea th:field="*{postText}" class="form-control border-input" placeholder= "Express yourself!" maxlength="141" rows="6"></textarea>
+                    <div class="media-footer">
+                        <input class="btn btn-info btn-fill btn-wd pull-right"
+                               type="submit" value="Post Message" />
+                    </div>
+                </form>
+                <br />
+                <br />
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end tweet modal -->
+
+
 
 </body>
 
