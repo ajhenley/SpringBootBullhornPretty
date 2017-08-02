@@ -1,5 +1,6 @@
 package byAJ.controller;
 
+import byAJ.config.CloudinaryConfig;
 import byAJ.models.BullhornFollow;
 import byAJ.models.BullhornPost;
 import byAJ.models.BullhornUser;
@@ -13,10 +14,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.cloudinary.utils.ObjectUtils;
+
+import com.cloudinary.Singleton;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.Date;
+import java.util.Map;
 
 @Controller
 public class HomeController {
@@ -35,6 +42,9 @@ public class HomeController {
 
     @Autowired
     BullhornFollowRepository followRepository;
+
+    @Autowired
+    CloudinaryConfig cloudc;
 
     @RequestMapping("/")
     public String index(Model model, Principal principal){
@@ -107,15 +117,52 @@ public class HomeController {
     }
 
     @PostMapping("/updateprofile")
-    public String updateProfile(@Valid BullhornUser user, BindingResult result)
+    public String updateProfile(@RequestParam("headshotz") MultipartFile headshot,
+                                @RequestParam("backgroundz") MultipartFile background,
+            @Valid BullhornUser user, BindingResult result, Model model)
     {
         if(result.hasErrors()){
             return "redirect:/myprofile";
         } else {
+            if(!headshot.isEmpty())
+            {
+                try {
+                    Map uploadResult = cloudc.upload(headshot.getBytes(), ObjectUtils.asMap("resourcetype", "auto"));
+                    user.setHeadshot(cloudc.createUrl(
+                            uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString(),
+                            64,
+                            64,
+                            "fill"));
+                    user.setProfilepic(cloudc.createUrl(
+                            uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString(),
+                            127,
+                            127,
+                            "fill"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    model.addAttribute("message", "Sorry I can't upload that headshot!");
+                    return "redirect:/myprofile";
+                }
+
+                try {
+                    Map uploadResult = cloudc.upload(background.getBytes(), ObjectUtils.asMap("resourcetype", "auto"));
+                    user.setBackground(cloudc.createUrl(
+                            uploadResult.get("public_id").toString() + "." + uploadResult.get("format").toString(),
+                            1500,
+                            300,
+                            "fill"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    model.addAttribute("message", "Sorry I can't upload that background!");
+                    return "redirect:/myprofile";
+                }
+            }
             userRepository.save(user);
             return "redirect:/myprofile";
         }
     }
+
+
 
     public UserValidator getUserValidator() {
         return userValidator;
