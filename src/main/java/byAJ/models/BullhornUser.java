@@ -1,6 +1,8 @@
 package byAJ.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -19,15 +21,15 @@ public class BullhornUser {
 
     private String motto;
 
-    private String useremail;
+    private String useremail; //
 
-    private String username;
+    private String username; //
 
     private String userpassword;
 
-    private String headshot;
+    private String headshot = "http://res.cloudinary.com/learningbycoding/image/upload/c_scale,w_64/v1501636042/blank-profile-picture-973460_640_gjacyc.png";
 
-    private String profilepic;
+    private String profilepic = "http://res.cloudinary.com/learningbycoding/image/upload/c_scale,w_127/v1501636042/blank-profile-picture-973460_640_gjacyc.png";
 
     private String website;
 

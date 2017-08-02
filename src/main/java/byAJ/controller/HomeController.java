@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Date;
 
 @Controller
 public class HomeController {
@@ -53,29 +54,40 @@ public class HomeController {
     }
 
     @RequestMapping(value="/register", method = RequestMethod.GET)
-    public String showRegistrationPage(Model model){
-        model.addAttribute("user", new BullhornUser());
-        return "registration";
+    public String showRegistrationPage(Model model, Principal principal){
+        if (principal == null){
+            model.addAttribute("user", new BullhornUser());
+            return "registration";
+        } else {
+            return "redirect:/";
+        }
     }
 
     @RequestMapping(value="/register", method = RequestMethod.POST)
-    public String processRegistrationPage(@Valid @ModelAttribute("user") BullhornUser user, BindingResult result, Model model){
+    public String processRegistrationPage(@Valid @ModelAttribute("user") BullhornUser user, BindingResult result,
+                                          Model model, Principal principal){
 
-        model.addAttribute("user", user);
-        userValidator.validate(user, result);
+        if (principal == null) {
+            model.addAttribute("user", user);
+            userValidator.validate(user, result);
 
-        if (result.hasErrors()) {
-            return "registration";
-        } else {
-            userService.saveUser(user);
-            model.addAttribute("message", "User Account Successfully Created");
+            if (result.hasErrors()) {
+                return "registration";
+            } else {
+                user.setJoindate(new Date());
+                userService.saveUser(user);
+                model.addAttribute("message", "User Account Successfully Created");
+            }
+            return "i_index";
+        } else  {
+            return "redirect:/";
         }
-        return "index";
     }
 
     @RequestMapping("/showprofile/{id}")
     public String showProfile(@PathVariable("id") Long id, Model model){
         model.addAttribute("user", userRepository.findOne(id));
+        model.addAttribute("isMe", false);
         return "profile";
     }
 
@@ -89,7 +101,20 @@ public class HomeController {
     @RequestMapping("/myprofile")
     public String showMyProfile(Principal principal, Model model){
         model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        model.addAttribute("post", new BullhornPost());
+        model.addAttribute("isMe", true);
         return "profile";
+    }
+
+    @PostMapping("/updateprofile")
+    public String updateProfile(@Valid BullhornUser user, BindingResult result)
+    {
+        if(result.hasErrors()){
+            return "redirect:/myprofile";
+        } else {
+            userRepository.save(user);
+            return "redirect:/myprofile";
+        }
     }
 
     public UserValidator getUserValidator() {

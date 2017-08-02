@@ -25,20 +25,17 @@ public class UserValidator implements Validator {
         String username = user.getUsername();
         String password = user.getUserpassword();
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "user.firstName.empty");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "user.lastName.empty");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "user.username.empty");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "user.email.empty");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "user.password.empty");
-
         if(username.length() < 5){
             errors.rejectValue("username","user.username.tooShort");
         }
         if(password.length() < 5){
-            errors.rejectValue("password","user.password.tooShort");
+            errors.rejectValue("userpassword","user.password.tooShort");
         }
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "useremail", "user.email.empty");
+
         if(userRepository.countByUseremail(email)>0){
-            errors.rejectValue("email", "user.email.duplicate");
+            errors.rejectValue("useremail", "user.email.duplicate");
         }
         if(userRepository.countByUsername(username)>0){
             errors.rejectValue("username", "user.username.duplicate");

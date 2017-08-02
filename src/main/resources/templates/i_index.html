@@ -54,49 +54,6 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <form class="navbar-form" role="search">
-                        <!--
-                                        <div class="form-group">
-                                          <input type="text" class="form-control border-input" placeholder="Search">
-                                        </div>
-                        -->
-                        <button type="submit" class="btn btn-icon"><i class="fa fa-search"></i></button>
-                    </form>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="profile-photo dropdown-toggle" data-toggle="dropdown">
-                        <div class="profile-photo-small">
-                            <img src="/assets/img/cristina.jpg" alt="Circle Image" class="img-circle img-responsive img-no-padding" />
-                        </div>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-right dropdown-wide">
-                        <li class="dropdown-header">
-                            Dropdown header
-                        </li>
-                        <li>
-                            <a href="#">Me</a>
-                        </li>
-                        <li>
-                            <a href="#">Settings and other stuff</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="#">Sign out</a></li>
-                        <li class="dropdown-footer">
-                            <ul class="dropdown-footer-menu">
-                                <li>
-                                    <a href="#">Creative Tim</a>
-                                </li>
-                                <li>
-                                    <a href="#">Terms</a>
-                                </li>
-                                <li>
-                                    <a href="#">Privacy</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li>
                     <a href="/login" class="btn btn-info btn-fill btn-icon" ><i class="fa fa-lock"></i> Login</a>
                 </li>
             </ul>
@@ -141,61 +98,8 @@
                                         </a>
                                         <div class="media-body">
                                             <strong th:text="${post.bullhornuser.username}">Rihanna</strong>
-                                            <h5 class="media-heading"><small th:inline="text">@[[${post.bullhornuser.username}]] &middot; 1h</small></h5>
+                                            <h5 class="media-heading"><small th:inline="text">@[[${post.bullhornuser.username}]] &middot; </small><small class="prettydate" th:text="${#dates.formatISO(post.postDate)}"></small></h5>
                                             <p th:text="${post.postText}"></p>
-
-                                            <div class="media-footer">
-                                                <a href="#" class="btn btn-simple">
-                                                    <i class="fa fa-reply"></i>
-                                                </a>
-                                                <a href="#" class="btn btn-success btn-simple">
-                                                    <i class="fa fa-retweet"></i> 2.1k
-                                                </a>
-                                                <a href="#" class="btn btn-danger btn-simple">
-                                                    <i class="fa fa-heart"></i> 3.2k
-                                                </a>
-                                                <div class="dropdown">
-                                                    <button id="dLabel" type="button" class="btn btn-icon btn-simple btn-lg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fa fa-ellipsis-h"></i>
-                                                    </button>
-                                                    <ul class="dropdown-menu dropdown-sharing dropdown-menu-right dropdown-medium" aria-labelledby="dLabel">
-                                                        <li>
-                                                            <a href="#" class="action-line">
-                                                                <div class="row">
-                                                                    <div class="col-xs-2">
-                                                                        <span class="icon-simple"><i class="fa fa-envelope"></i></span>
-                                                                    </div>
-                                                                    <div class="col-xs-9">Direct Message</div>
-                                                                </div>
-                                                            </a>
-                                                        </li>
-                                                        <li class="divider"></li>
-                                                        <li>
-                                                            <a href="#" class="action-line">
-                                                                <div class="row">
-                                                                    <div class="col-xs-2">
-                                                                        <span class="icon-simple"><i class="fa fa-microphone-slash"></i></span>
-                                                                    </div>
-                                                                    <div class="col-xs-9">Mute</div>
-                                                                </div>
-                                                            </a>
-                                                        </li>
-                                                        <li class="divider"></li>
-                                                        <li>
-                                                            <a href="#" class="action-line">
-                                                                <div class="row">
-                                                                    <div class="col-xs-2">
-                                                                        <span class="icon-simple"><i class="fa fa-exclamation-circle"></i></span>
-                                                                    </div>
-                                                                    <div class="col-xs-9">Report</div>
-                                                                </div>
-                                                            </a>
-                                                        </li>
-                                                        <li class="divider"></li>
-
-                                                    </ul>
-                                                </div>
-                                            </div>
 
                                         </div>
                                     </div> <!-- end media -->
@@ -264,6 +168,8 @@
 
 <!-- core js -->
 <script src="/assets/js/ct-paper.js"></script>
+<script src="/assets/js/pretty.js"></script>
+
 <script>
     $('.btn-tooltip').tooltip('show');
 </script>

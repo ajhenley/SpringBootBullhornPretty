@@ -64,28 +64,25 @@
                 <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 ">
                     <div class="demo-card">
                         <h3 class="title">Welcome</h3>
-                        <div th:if="${param.error}">
-                            Invalid username and password.
-                        </div>
                         <div th:if="${param.logout}">
                             You have been logged out.
                         </div>
                         <form class="register-form" autocomplete="off" action="#" th:action="@{/register}"
                               th:object="${user}" method="post" >
-                            <label>First Name <mark><strong><span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name Error</span></strong></mark></label>
-                            <input type="text" class="form-control" placeholder="First Name" th:field="*{fname}" />
-                            <label>Last Name <mark><strong><span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name Error</span></strong></mark></label>
-                            <input type="text" class="form-control" placeholder="Last Name" th:field="*{lname}" />
-                            <label>Email <mark><strong><span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span></strong></mark></label>
-                            <input type="email" class="form-control" placeholder="Email" th:field="*{email}" />
-                            <label>Last Name </label>
-                            <input type="text" class="form-control" placeholder="Last Name" th:field="*{lname}" />
-                            <label>Username</label>
+                            <div th:if="${#fields.hasAnyErrors()}">
+                                <p th:each="err : ${#fields.allErrors()}" th:text="${err}">...</p>
+                            </div>
+                            <label>Username </label>
                             <input type="text" class="form-control" placeholder="Username" th:field="*{username}" />
-
-                            <label>Password</label>
-                            <input type="password" class="form-control" placeholder="Password" th:field="*{password}" />
-                            <input type="submit" class="btn btn-danger btn-block" value="Sign In"/>
+                            <label>Email </label>
+                            <input type="email" class="form-control" placeholder="Email" th:field="*{useremail}" />
+                            <label>Location </label>
+                            <input type="text" class="form-control" placeholder="Location" th:field="*{location}" />
+                            <label>Motto </label>
+                            <input type="text" class="form-control" placeholder="Your motto" th:field="*{motto}" />
+                            <label>Password </label>
+                            <input type="password" class="form-control" placeholder="Password" th:field="*{userpassword}" />
+                            <input type="submit" class="btn btn-danger btn-block" value="Register"/>
                         </form>
                         <div class="forgot">
                             <a href="#" class="btn btn-simple btn-danger">Forgot password?</a>
@@ -95,9 +92,7 @@
             </div>
         </div>
 
-        <div class="demo-footer text-center">
-            <h6>&copy; 2016, made with <i class="fa fa-heart heart"></i> by Creative Tim</h6>
-        </div>
+
     </div>
 </div>
 
@@ -114,39 +109,4 @@
 <script src="/assets/js/bootstrap-select.js"></script>
 <script src="/assets/js/bootstrap-datepicker.js"></script>
 <script src="/assets/js/ct-paper.js"></script>
-
-</html>
-<div class="container">
-    <br /><br /><br />
-    <h4>New User Registration</h4>
-
-    <form autocomplete="off" action="#" th:action="@{/register}"
-          th:object="${user}" method="post">
-        <div class="form-group">
-            <label for="firstName">First Name <mark><strong><span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name Error</span></strong></mark></label>
-            <input type="text" class="form-control" id="firstName" placeholder="First Name" th:field="*{firstName}" />
-        </div>
-        <div class="form-group">
-            <label for="lastName">Last Name <mark><strong><span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name Error</span></strong></mark></label>
-            <input type="text" class="form-control" id="lastName" placeholder="Last Name" th:field="*{lastName}" />
-        </div>
-        <div class="form-group">
-            <label for="email">Email <mark><strong><span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span></strong></mark></label>
-            <input type="text" class="form-control" id="email" placeholder="Email" th:field="*{email}" />
-        </div>
-        <div class="form-group">
-            <label for="username">Username <mark><strong><span th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</span></strong></mark></label>
-            <input type="text" class="form-control" id="username" placeholder="Username" th:field="*{username}" />
-        </div>
-        <div class="form-group">
-            <label for="password">Password <mark><strong><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</span></strong></mark></label>
-            <input type="text" class="form-control" id="password" placeholder="Password" th:field="*{password}" />
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-    </form>
-
-</div><!-- /.container -->
-
-
-</body>
 </html>
