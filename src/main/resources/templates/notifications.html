@@ -35,9 +35,9 @@
                     <div class="avatar">
                         <img src="/assets/img/rihanna.jpg" th:src="${user.profilepic}" alt="Circle Image" class="img-circle img-responsive" />
                         <th:block th:if="${isOther}">
-                        <div class="following">
-                            <a class="btn btn-sm btn-fill btn-info btn-icon" rel="tooltip" title="Follow" th:href="@{/follow/{id} (id=${user.id})}"><i class="fa fa-plus"></i></a>
-                        </div>
+                            <div class="following">
+                                <a class="btn btn-sm btn-fill btn-info btn-icon" rel="tooltip" title="Follow" th:href="@{/follow/{id} (id=${user.id})}"><i class="fa fa-plus"></i></a>
+                            </div>
                         </th:block>
                     </div>
 
@@ -64,16 +64,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="tweets">
-                                    <div class="media" th:each="post : ${posts}">
-                                        <a class="pull-left" href="#" th:href="@{/profile/{id} (id = ${post.bullhornuser.id})}">
-                                            <div class="avatar">
-                                                <img class="media-object" th:src="@{${post.bullhornuser.headshot}}" src="/assets/img/rihanna.jpg" alt="..." />
-                                            </div>
-                                        </a>
+                                    <div class="media" th:each="notice : ${notifications}">
                                         <div class="media-body">
-                                            <strong th:text="${post.bullhornuser.username}">Rihanna</strong>
-                                            <h5 class="media-heading"><small th:inline="text">@[[${post.bullhornuser.username}]] &middot; 1h</small></h5>
-                                            <p th:text="${post.postText}"></p>
+                                            <p th:text="${notice.notice}"></p>
 
                                         </div>
                                     </div> <!-- end media -->

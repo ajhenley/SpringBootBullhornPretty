@@ -21,85 +21,8 @@
 
 </head>
 <body class="twitter-profile-tweets">
-<nav class="navbar navbar-relative navbar-ct-transparent" role="navigation-demo" id="twitter-navbar">
+<nav th:replace="base :: navbar" class="navbar navbar-relative navbar-ct-transparent" role="navigation-demo" id="twitter-navbar">
 
-    <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="navigation-example">
-            <div class="twitter-logo">
-                <a class="btn btn-lg btn-simple"><i class="fa fa-twitter"></i></a>
-            </div>
-
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="#" class="btn btn-info btn-simple">Home</a>
-                </li>
-                <li>
-                    <a href="#" target="_blank" class="btn btn-info btn-simple">Notifications</a>
-                </li>
-                <li>
-                    <a href="#" target="_blank" class="btn btn-info btn-simple">Messages</a>
-                </li>
-
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <form class="navbar-form" role="search">
-
-                        <div class="form-group">
-                            <input type="text" class="form-control border-input" placeholder="Search" />
-                        </div>
-
-                        <button type="submit" class="btn btn-icon"><i class="fa fa-search"></i></button>
-                    </form>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="profile-photo dropdown-toggle" data-toggle="dropdown">
-                        <div class="profile-photo-small">
-                            <img th:src="@{${user.headshot}}" alt="Circle Image" class="img-circle img-responsive img-no-padding" />
-                        </div>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-right dropdown-wide">
-                        <li>
-                            <a href="/myprofile">Me</a>
-                        </li>
-                        <li>
-                            <a href="/settings">Settings and other stuff</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="/logout">Sign out</a></li>
-                        <li class="dropdown-footer">
-                            <ul class="dropdown-footer-menu">
-                                <li>
-                                    <a href="http://www.messycola.com">Messy Cola</a>
-                                </li>
-                                <li>
-                                    <a href="/terms">Terms</a>
-                                </li>
-                                <li>
-                                    <a href="/privacy">Privacy</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="#" class="btn btn-info btn-fill btn-icon" data-toggle="modal" data-target="#tweetModal"><i class="fa fa-pencil"></i> Post</a>
-                </li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-->
 </nav>
 
 <div class="wrapper">
@@ -112,9 +35,6 @@
                 <div class="col-md-2 col-md-offset-5 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3 text-center">
                     <div class="avatar">
                         <img src="/assets/img/rihanna.jpg" th:src="${user.profilepic}" alt="Circle Image" class="img-circle img-responsive" />
-                        <div class="following">
-                            <btn class="btn btn-sm btn-fill btn-info btn-icon" rel="tooltip" title="Follow"><i class="fa fa-plus"></i></btn>
-                        </div>
                     </div>
 
                     <div class="name">

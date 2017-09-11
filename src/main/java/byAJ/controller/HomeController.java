@@ -2,9 +2,11 @@ package byAJ.controller;
 
 import byAJ.config.CloudinaryConfig;
 import byAJ.models.BullhornFollow;
+import byAJ.models.BullhornNotification;
 import byAJ.models.BullhornPost;
 import byAJ.models.BullhornUser;
 import byAJ.repositories.BullhornFollowRepository;
+import byAJ.repositories.BullhornNotificationRepository;
 import byAJ.repositories.BullhornPostRepository;
 import byAJ.repositories.BullhornUserRepository;
 import byAJ.service.UserService;
@@ -41,6 +43,9 @@ public class HomeController {
     BullhornUserRepository userRepository;
 
     @Autowired
+    BullhornNotificationRepository bullhornNotificationRepository;
+
+    @Autowired
     CloudinaryConfig cloudc;
 
     @RequestMapping("/")
@@ -49,6 +54,7 @@ public class HomeController {
         if (principal == null){
             return "i_index";
         } else {
+            model.addAttribute("currentuser",userRepository.findByUsername(principal.getName()));
             model.addAttribute("user",userRepository.findByUsername(principal.getName()));
             model.addAttribute("post", new BullhornPost());
             model.addAttribute( "isOther", Boolean.FALSE);
@@ -93,8 +99,11 @@ public class HomeController {
     }
 
     @RequestMapping("/showprofile/{id}")
-    public String showProfile(@PathVariable("id") Long id, Model model){
+    public String showProfile(@PathVariable("id") Long id, Model model, Principal principal){
+        BullhornUser user = userRepository.findByUsername(principal.getName());
+        model.addAttribute("currentuser", user);
         model.addAttribute("user", userRepository.findOne(id));
+        model.addAttribute("post", new BullhornPost());
         model.addAttribute("isOther", Boolean.TRUE);
         return "s_index";
     }
@@ -115,7 +124,9 @@ public class HomeController {
 
     @RequestMapping("/myprofile")
     public String showMyProfile(Principal principal, Model model){
-        model.addAttribute("user", userRepository.findByUsername(principal.getName()));
+        BullhornUser user = userRepository.findByUsername(principal.getName());
+        model.addAttribute("currentuser", user);
+        model.addAttribute("user", user);
         model.addAttribute("post", new BullhornPost());
         model.addAttribute("isMe", true);
         return "profile";
@@ -177,6 +188,14 @@ public class HomeController {
 
         userRepository.save(user);
         return "redirect:/myprofile";
+    }
+
+    @RequestMapping("/notifications/show/all")
+    public String showNotifications(Model model, Principal principal){
+        BullhornUser user = userRepository.findByUsername(principal.getName());
+        model.addAttribute("currentuser", user);
+        model.addAttribute("notifications", bullhornNotificationRepository.findAllByUseridAndBeenSeenOrderById(user.getId(), Boolean.FALSE));
+        return "notifications";
     }
 
 
