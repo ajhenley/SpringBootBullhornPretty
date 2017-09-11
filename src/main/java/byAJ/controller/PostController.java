@@ -7,10 +7,7 @@ import byAJ.repositories.BullhornUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Date;
@@ -27,6 +24,13 @@ public class PostController {
     @GetMapping("/addpost")
     public String loadPostForm(Model model){
         model.addAttribute("post", new BullhornPost());
+        return "addpost";
+    }
+
+    @GetMapping("/repost/{postid}")
+    public String loadRepostForm(@RequestParam("postid") long postid, Model model){
+        model.addAttribute("post", new BullhornPost());
+        model.addAttribute("postid", postid);
         return "addpost";
     }
 

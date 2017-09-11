@@ -13,4 +13,11 @@ public interface BullhornPostRepository extends CrudRepository<BullhornPost, Lon
 
     @Query(value="Select * from bullhorn_post order by post_date desc", nativeQuery = true)
     List<BullhornPost> findAllOrdered();
+
+    List<BullhornPost> findByOrderByPostDateDesc();
+
+    @Query(value="Select * from bullhorn_post where bullhornuser_id " +
+            "in (select followee_id from bullhorn_follow where user_id = ?1) order by post_date desc", nativeQuery = true)
+    List<BullhornPost> findAllFollowedOrdered(long user_id);
+
 }

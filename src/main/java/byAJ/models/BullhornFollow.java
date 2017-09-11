@@ -12,13 +12,17 @@ public class BullhornFollow {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private long user_id;
+    private long userid;
 
-    private long followee_id;
+    private long followeeid;
 
-    public BullhornFollow(long user_id, long followee_id) {
-        this.user_id = user_id;
-        this.followee_id = followee_id;
+
+    public BullhornFollow() {
+    }
+
+    public BullhornFollow(long userid, long followeeid) {
+        this.userid = userid;
+        this.followeeid = followeeid;
     }
 
     public long getId() {
@@ -29,19 +33,19 @@ public class BullhornFollow {
         this.id = id;
     }
 
-    public long getUser_id() {
-        return user_id;
+    public long getUserid() {
+        return userid;
     }
 
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
+    public void setUserid(long userid) {
+        this.userid = userid;
     }
 
-    public long getFollowee_id() {
-        return followee_id;
+    public long getFolloweeid() {
+        return followeeid;
     }
 
-    public void setFollowee_id(long followee_id) {
-        this.followee_id = followee_id;
+    public void setFolloweeid(long followeeid) {
+        this.followeeid = followeeid;
     }
 }

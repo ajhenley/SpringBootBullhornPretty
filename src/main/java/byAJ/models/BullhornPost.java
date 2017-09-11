@@ -16,6 +16,12 @@ public class BullhornPost {
 
     private String image;
 
+    private Boolean isRepost;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "bullhornpost_id")
+    private BullhornPost repost;
+
     @ManyToOne
     private BullhornUser bullhornuser;
 
@@ -73,5 +79,17 @@ public class BullhornPost {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Boolean getRepost() {
+        return isRepost;
+    }
+
+    public void setRepost(BullhornPost repost) {
+        this.repost = repost;
+    }
+
+    public void setRepost(Boolean repost) {
+        isRepost = repost;
     }
 }

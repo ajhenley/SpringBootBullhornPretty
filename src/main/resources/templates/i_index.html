@@ -21,7 +21,7 @@
 
 </head>
 <body class="twitter-profile-tweets">
-<nav class="navbar navbar-relative navbar-ct-transparent" role="navigation-demo" id="twitter-navbar">
+<nav th:replace="base :: navbar" class="navbar navbar-relative navbar-ct-transparent" role="navigation-demo" id="twitter-navbar">
 
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -47,10 +47,6 @@
                 <li>
                     <a href="#" target="_blank" class="btn btn-info btn-simple">Notifications</a>
                 </li>
-                <li>
-                    <a href="#" target="_blank" class="btn btn-info btn-simple">Messages</a>
-                </li>
-
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
@@ -79,7 +75,7 @@
     </div>
 </div>
 <div class="wrapper">
-    <div class="profile-background"  style="background-image: url('/assets/img/rihanna_cover.jpg');">
+    <div class="profile-background"  style="background-image: url('http://res.cloudinary.com/learningbycoding/image/upload/v1505114844/communicateheader_u5wrhu.jpg');">
         <div class="filter-black"></div>
     </div>
     <div class="profile-content section-white-gray">
@@ -98,7 +94,8 @@
                                         </a>
                                         <div class="media-body">
                                             <strong th:text="${post.bullhornuser.username}">Rihanna</strong>
-                                            <h5 class="media-heading"><small th:inline="text">@[[${post.bullhornuser.username}]] &middot; </small><small class="prettydate" th:text="${#dates.formatISO(post.postDate)}"></small></h5>
+                                            <h5 class="media-heading"><small th:inline="text">@[[${post.bullhornuser.username}]] &middot; </small>
+                                                <small class="timeago" th:attr="title=${post.postDate}" title="2017-09-10T09:24:17Z">December 17, 2011</small></h5>
                                             <p th:text="${post.postText}"></p>
 
                                         </div>
@@ -118,33 +115,7 @@
         </div>
     </div>
 </div>
-<footer class="footer-demo section-gray">
-    <div class="container">
-        <nav class="pull-left">
-            <ul>
-
-                <li>
-                    <a href="http://www.ajhenley.com">
-                        AJ Henley
-                    </a>
-                </li>
-                <li>
-                    <a href="http://www.messycola.com">
-                        Blog
-                    </a>
-                </li>
-                <li>
-                    <a href="http://www.creative-tim.com/product/rubik">
-                        Licenses
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <div class="copyright pull-right">
-            &copy; 2017, made with <i class="fa fa-heart heart"></i> by AJ
-        </div>
-    </div>
-</footer>
+<footer th:replace="base :: footer"></footer>
 
 </body>
 
@@ -168,9 +139,14 @@
 
 <!-- core js -->
 <script src="/assets/js/ct-paper.js"></script>
-<script src="/assets/js/pretty.js"></script>
 
 <script>
     $('.btn-tooltip').tooltip('show');
+</script>
+<script src='http://timeago.yarp.com/jquery.timeago.js'></script>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        $("small.timeago").timeago();
+    });
 </script>
 </html>

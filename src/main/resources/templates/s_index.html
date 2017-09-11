@@ -21,7 +21,7 @@
 
 </head>
 <body class="twitter-profile-tweets">
-<nav class="navbar navbar-relative navbar-ct-transparent" role="navigation-demo" id="twitter-navbar">
+<nav  th:replace="base :: navbar" class="navbar navbar-relative navbar-ct-transparent" role="navigation-demo" id="twitter-navbar">
 
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -81,7 +81,7 @@
                         <li class="dropdown-footer">
                             <ul class="dropdown-footer-menu">
                                 <li>
-                                    <a href="http://www.messycola.com">Messy Cola</a>
+                                    <a href="http://www.ajhenley.com">AJ Henley</a>
                                 </li>
                                 <li>
                                     <a href="/terms">Terms</a>
@@ -93,7 +93,6 @@
                         </li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="#" class="btn btn-info btn-fill btn-icon" data-toggle="modal" data-target="#tweetModal"><i class="fa fa-pencil"></i> Post</a>
                 </li>
@@ -112,9 +111,11 @@
                 <div class="col-md-2 col-md-offset-5 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3 text-center">
                     <div class="avatar">
                         <img src="/assets/img/rihanna.jpg" th:src="${user.profilepic}" alt="Circle Image" class="img-circle img-responsive" />
+                        <th:block th:if="${isOther}">
                         <div class="following">
-                            <btn class="btn btn-sm btn-fill btn-info btn-icon" rel="tooltip" title="Follow"><i class="fa fa-plus"></i></btn>
+                            <a class="btn btn-sm btn-fill btn-info btn-icon" rel="tooltip" title="Follow"><i class="fa fa-plus"></i></a>
                         </div>
+                        </th:block>
                     </div>
 
                     <div class="name">
@@ -141,7 +142,7 @@
                             <div class="col-md-12">
                                 <div class="tweets">
                                     <div class="media" th:each="post : ${posts}">
-                                        <a class="pull-left" href="#">
+                                        <a class="pull-left" href="#" th:href="@{/profile/{id} (id = ${post.bullhornuser.id})}">
                                             <div class="avatar">
                                                 <img class="media-object" th:src="@{${post.bullhornuser.headshot}}" src="/assets/img/rihanna.jpg" alt="..." />
                                             </div>

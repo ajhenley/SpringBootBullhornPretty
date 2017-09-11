@@ -41,9 +41,6 @@ public class HomeController {
     BullhornUserRepository userRepository;
 
     @Autowired
-    BullhornFollowRepository followRepository;
-
-    @Autowired
     CloudinaryConfig cloudc;
 
     @RequestMapping("/")
@@ -54,6 +51,7 @@ public class HomeController {
         } else {
             model.addAttribute("user",userRepository.findByUsername(principal.getName()));
             model.addAttribute("post", new BullhornPost());
+            model.addAttribute( "isOther", Boolean.FALSE);
             return "s_index";
         }
     }
@@ -97,14 +95,21 @@ public class HomeController {
     @RequestMapping("/showprofile/{id}")
     public String showProfile(@PathVariable("id") Long id, Model model){
         model.addAttribute("user", userRepository.findOne(id));
-        model.addAttribute("isMe", false);
-        return "profile";
+        model.addAttribute("isOther", Boolean.TRUE);
+        return "s_index";
     }
 
     @RequestMapping("/follow/{id}")
     public String followUser(@PathVariable("id") Long id, Model model, Principal principal){
         Long userid = userRepository.findByUsername(principal.getName()).getId();
-        followRepository.save(new BullhornFollow(userid, id));
+        userService.followUser(userid, id);
+        return "redirect:/myprofile";
+    }
+
+    @RequestMapping("/unfollow/{id}")
+    public String unFollowUser(@PathVariable("id") Long id, Model model, Principal principal){
+        Long userid = userRepository.findByUsername(principal.getName()).getId();
+        userService.unfollowUser(userid, id);
         return "redirect:/myprofile";
     }
 

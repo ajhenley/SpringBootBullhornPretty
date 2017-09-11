@@ -1,6 +1,8 @@
 package byAJ.service;
 
+import byAJ.models.BullhornFollow;
 import byAJ.models.BullhornUser;
+import byAJ.repositories.BullhornFollowRepository;
 import byAJ.repositories.BullhornRoleRepository;
 import byAJ.repositories.BullhornUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private BullhornFollowRepository bullhornFollowRepository;
 
     @Autowired
     public UserService(BullhornUserRepository userRepository) {
@@ -47,5 +52,14 @@ public class UserService {
         user.setRoles(Arrays.asList(roleRepository.findByRole("ADMIN")));
         user.setUserpassword(passwordEncoder.encode(user.getUserpassword()));
         userRepository.save(user);
+    }
+
+    public void followUser(long user, long followee){
+        bullhornFollowRepository.save(new BullhornFollow(user, followee));
+    }
+
+    public void unfollowUser(long user, long followee){
+        bullhornFollowRepository.delete(
+                bullhornFollowRepository.findByUseridAndFolloweeid(user, followee));
     }
 }

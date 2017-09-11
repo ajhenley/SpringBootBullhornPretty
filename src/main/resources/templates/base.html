@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="../assets/img/favicon.ico">
+    <link rel="icon" type="image/png" href="../assets/img/favicon.ico" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
     <title>Paper Kit by Creative Tim</title>
@@ -16,12 +16,12 @@
     <link href="../assets/css/examples.css" rel="stylesheet" />
 
     <!--     Fonts and icons     -->
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css' />
 
 </head>
 <body class="twitter-profile-tweets">
-<nav class="navbar navbar-relative navbar-ct-transparent" role="navigation-demo" id="twitter-navbar">
+<nav th:fragment="navbar" class="navbar navbar-relative navbar-ct-transparent" role="navigation-demo" id="twitter-navbar">
 
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -37,68 +37,68 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navigation-example">
             <div class="twitter-logo">
-                <a class="btn btn-lg btn-simple"><i class="fa fa-twitter"></i></a>
+                <a class="btn btn-lg btn-simple"><i class="fa fa-bullhorn"></i></a>
             </div>
 
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="#" class="btn btn-info btn-simple">Home</a>
+                    <a href="#" class="btn btn-info btn-simple">Bullhorn</a>
                 </li>
                 <li>
                     <a href="#" target="_blank" class="btn btn-info btn-simple">Notifications</a>
                 </li>
-                <li>
-                    <a href="#" target="_blank" class="btn btn-info btn-simple">Messages</a>
-                </li>
-
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <form class="navbar-form" role="search">
-                        <!--
-                                        <div class="form-group">
-                                          <input type="text" class="form-control border-input" placeholder="Search">
-                                        </div>
-                        -->
-                        <button type="submit" class="btn btn-icon"><i class="fa fa-search"></i></button>
-                    </form>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="profile-photo dropdown-toggle" data-toggle="dropdown">
-                        <div class="profile-photo-small">
-                            <img src="../assets/img/cristina.jpg" alt="Circle Image" class="img-circle img-responsive img-no-padding">
-                        </div>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-right dropdown-wide">
-                        <li class="dropdown-header">
-                            Dropdown header
-                        </li>
-                        <li>
-                            <a href="#">Me</a>
-                        </li>
-                        <li>
-                            <a href="#">Settings and other stuff</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="#">Sign out</a></li>
-                        <li class="dropdown-footer">
-                            <ul class="dropdown-footer-menu">
-                                <li>
-                                    <a href="#">Creative Tim</a>
-                                </li>
-                                <li>
-                                    <a href="#">Terms</a>
-                                </li>
-                                <li>
-                                    <a href="#">Privacy</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" class="btn btn-info btn-fill btn-icon" data-toggle="modal" data-target="#tweetModal"><i class="fa fa-pencil"></i> Tweet</a>
-                </li>
+                <th:block sec:authorize="isAuthenticated()">
+                    <li>
+                        <form class="navbar-form" role="search">
+                            <!--
+                                            <div class="form-group">
+                                              <input type="text" class="form-control border-input" placeholder="Search">
+                                            </div>
+                            -->
+                            <button type="submit" class="btn btn-icon"><i class="fa fa-search"></i></button>
+                        </form>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="profile-photo dropdown-toggle" data-toggle="dropdown">
+                            <div class="profile-photo-small">
+                                <img th:src="@{${user.headshot}}" alt="Circle Image" class="img-circle img-responsive img-no-padding" />
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right dropdown-wide">
+                            <li>
+                                <a href="/myprofile">Me</a>
+                            </li>
+                            <li>
+                                <a href="/settings">Settings and other stuff</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="/logout">Sign out</a></li>
+                            <li class="dropdown-footer">
+                                <ul class="dropdown-footer-menu">
+                                    <li>
+                                        <a href="http://www.ajhenley.com">AJ Henley</a>
+                                    </li>
+                                    <li>
+                                        <a href="/terms">Terms</a>
+                                    </li>
+                                    <li>
+                                        <a href="/privacy">Privacy</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="btn btn-info btn-fill btn-icon" data-toggle="modal" data-target="#tweetModal"><i class="fa fa-pencil"></i> Post</a>
+                    </li>
+                </th:block>
+                <th:block sec:authorize="isAnonymous()">
+                    <li>
+                        <a href="/login" class="btn btn-info btn-fill btn-icon" ><i class="fa fa-lock"></i> Login</a>
+                    </li>
+                </th:block>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-->
@@ -186,7 +186,7 @@
                                     <div class="media">
                                         <a class="pull-left" href="#">
                                             <div class="avatar">
-                                                <img class="media-object" alt="Tim Picture" src="../assets/img/khaled.jpg">
+                                                <img class="media-object" alt="Tim Picture" src="../assets/img/khaled.jpg" />
                                             </div>
                                             <div class="retweet">
                                                 <btn class="btn btn-xs btn-fill btn-success btn-icon" rel="tooltip" title="Follow"><i class="fa fa-retweet"></i></btn>
@@ -200,7 +200,7 @@
                                                 <a href="#">
                                                     <div class="row">
                                                         <div class="col-md-4">
-                                                            <img src="../assets/img/khaled_tweet.png" alt="Rounded Image" class="img-rounded img-tweet-link img-responsive">
+                                                            <img src="../assets/img/khaled_tweet.png" alt="Rounded Image" class="img-rounded img-tweet-link img-responsive" />
                                                         </div>
                                                         <div class="col-md-8">
                                                             <strong>Let's win more by DJ Khaled</strong>
@@ -270,14 +270,14 @@
                                     <div class="media">
                                         <a class="pull-left" href="#">
                                             <div class="avatar">
-                                                <img class="media-object" alt="Tim Picture" src="../assets/img/rihanna.jpg">
+                                                <img class="media-object" alt="Tim Picture" src="../assets/img/rihanna.jpg" />
                                             </div>
                                         </a>
                                         <div class="media-body">
                                             <strong>Rihanna</strong>
                                             <h5 class="media-heading"><small>@rihanna &middot;  8 Jan 2016</small></h5>
                                             <p>bitch better have my mistletoe <a href="#" class="link-danger">#rihannaxstance</a> </p>
-                                            <img src="../assets/img/rihanna_tweet.jpeg" alt="Rounded Image" class="img-rounded img-tweet">
+                                            <img src="../assets/img/rihanna_tweet.jpeg" alt="Rounded Image" class="img-rounded img-tweet" />
 
 
                                             <div class="media-footer">
@@ -299,7 +299,7 @@
                                     <div class="media">
                                         <a class="pull-left" href="#">
                                             <div class="avatar">
-                                                <img class="media-object" alt="Tim Picture" src="../assets/img/rihanna.jpg">
+                                                <img class="media-object" alt="Tim Picture" src="../assets/img/rihanna.jpg" />
                                             </div>
                                         </a>
                                         <div class="media-body">
@@ -365,7 +365,7 @@
                                     <div class="media last-media">
                                         <a class="pull-left" href="#">
                                             <div class="avatar">
-                                                <img class="media-object" alt="Tim Picture" src="../assets/img/billboard.jpeg">
+                                                <img class="media-object" alt="Tim Picture" src="../assets/img/billboard.jpeg" />
                                             </div>
                                             <div class="retweet">
                                                 <btn class="btn btn-xs btn-fill btn-success btn-icon" rel="tooltip" title="Follow"><i class="fa fa-retweet"></i></btn>
@@ -445,7 +445,7 @@
         </div>
     </div>
 </div>
-<footer class="footer-demo section-gray">
+<footer th:fragment="footer" class="footer-demo section-gray">
     <div class="container">
         <nav class="pull-left">
             <ul>
